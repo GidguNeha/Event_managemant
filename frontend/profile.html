@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Your profile — EventHub</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/app.js"></script>
+</head>
+<body data-page="profile">
+  <header id="site-header"></header>
+  <main class="page-shell narrow-shell">
+    <div class="page-intro">
+      <span class="eyebrow">YOUR ACCOUNT</span>
+      <h1>Profile &amp; settings</h1>
+      <p>Keep your details up to date and your account secure.</p>
+    </div>
+    <form id="profile-form" class="form-card">
+      <h2>Personal details</h2>
+      <label>Full name<input name="fullName" maxlength="120" required></label>
+      <label>Email address<input name="email" type="email" disabled></label>
+      <label>WhatsApp number
+        <input name="phoneNumber" type="tel" autocomplete="tel" placeholder="+919876543210"
+               pattern="[+][1-9][0-9]{7,14}" required>
+        <small>Include your country code. This number and your email are used for unpaid booking reminders.</small>
+      </label>
+      <p id="profile-role" class="muted"></p>
+      <button class="button">Save changes</button>
+      <div class="form-message" role="status"></div>
+    </form>
+    <form id="password-form" class="form-card spaced-card">
+      <h2>Change password</h2>
+      <label>Current password<input name="currentPassword" type="password" autocomplete="current-password" required></label>
+      <label>New password<input name="newPassword" type="password" minlength="8" maxlength="72" autocomplete="new-password" required></label>
+      <button class="button button-secondary">Update password</button>
+      <div class="form-message" role="status"></div>
+    </form>
+  </main>
+  <footer id="site-footer"></footer>
+</body>
+</html>

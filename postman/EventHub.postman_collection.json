@@ -1,0 +1,80 @@
+{
+  "info": {
+    "name": "EventHub API",
+    "description": "Local API smoke tests. Register/login first; the login request stores the JWT automatically.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "token", "value": "" },
+    { "key": "eventId", "value": "1" },
+    { "key": "bookingId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"fullName\":\"Taylor Guest\",\"email\":\"taylor@example.test\",\"password\":\"ChangeMe123!\"}" },
+            "url": "{{baseUrl}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login (save token)",
+          "event": [{
+            "listen": "test",
+            "script": { "type": "text/javascript", "exec": ["if (pm.response.code === 200) pm.collectionVariables.set('token', pm.response.json().token);"] }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"email\":\"taylor@example.test\",\"password\":\"ChangeMe123!\"}" },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Current user",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/auth/me" }
+        }
+      ]
+    },
+    {
+      "name": "Events & bookings",
+      "item": [
+        { "name": "List events", "request": { "method": "GET", "url": "{{baseUrl}}/api/events" } },
+        { "name": "Search events", "request": { "method": "GET", "url": "{{baseUrl}}/api/events?search=city&category=Music" } },
+        { "name": "Event details", "request": { "method": "GET", "url": "{{baseUrl}}/api/events/{{eventId}}" } },
+        {
+          "name": "Book tickets",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"eventId\":1,\"ticketQuantity\":2}" },
+            "url": "{{baseUrl}}/api/bookings"
+          }
+        },
+        { "name": "My bookings", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/bookings/my" } },
+        { "name": "Cancel booking", "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/bookings/{{bookingId}}/cancel" } }
+      ]
+    },
+    {
+      "name": "Organizer (requires ORGANIZER role)",
+      "item": [
+        { "name": "Organizer events", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/organizer/events" } },
+        { "name": "Organizer dashboard", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/organizer/dashboard" } }
+      ]
+    },
+    {
+      "name": "Administrator (requires ADMIN role)",
+      "item": [
+        { "name": "Admin dashboard", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/admin/dashboard" } },
+        { "name": "Users", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/admin/users" } },
+        { "name": "All bookings", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/admin/bookings" } }
+      ]
+    }
+  ]
+}

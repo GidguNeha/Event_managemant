@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Create an account — EventHub</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/app.js"></script>
+</head>
+<body data-page="register">
+  <header id="site-header"></header>
+  <main class="auth-layout">
+    <section class="auth-promo">
+      <span class="eyebrow">GOOD TIMES, IN GOOD COMPANY</span>
+      <h1>Make plans.<br>Make memories.</h1>
+      <p>Join a community that shows up for the things that matter.</p>
+    </section>
+    <form id="register-form" class="form-card">
+      <span class="eyebrow">COME ON IN</span>
+      <h2>Create your account</h2>
+      <label>Full name<input name="fullName" autocomplete="name" maxlength="120" required></label>
+      <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+      <label>WhatsApp number
+        <input name="phoneNumber" type="tel" autocomplete="tel" placeholder="+919876543210"
+               pattern="[+][1-9][0-9]{7,14}" required>
+        <small>Include your country code.</small>
+      </label>
+      <label>Password<input name="password" type="password" minlength="8" maxlength="72" autocomplete="new-password" required><small>Use at least 8 characters.</small></label>
+      <label>Confirm password<input name="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></label>
+      <button class="button full-width" type="submit">Create account</button>
+      <div class="form-message" role="status" aria-live="polite"></div>
+      <p class="form-foot">Already a member? <a href="login.html">Log in</a></p>
+    </form>
+  </main>
+  <footer id="site-footer"></footer>
+</body>
+</html>

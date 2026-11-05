@@ -1,0 +1,7 @@
+@media print {
+  body { background: #fff; }
+  #site-header, #site-footer, .page-intro, .row-actions, [data-print-ticket] { display: none !important; }
+  .page-shell { width: 100%; margin: 0; padding: 0; }
+  #my-bookings { display: block; }
+  .booking-row { break-inside: avoid; border: 1px solid #777; box-shadow: none; margin: 0 0 16px; }
+}
